@@ -15,15 +15,9 @@
             width: x,
             height: y,
             physics: {
-                default: 'impact',
-                impact: {
-                    maxVelocity: 500,
-                    gravity: 100,
-                    debug: true,
-                    setBounds: {
-                        bottom: false,
-                        top: false
-                    }
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 1022 }
                 }
             },
             scene: {
@@ -56,15 +50,11 @@
 
             var logo = this.physics.add.image(x * Math.random(), -100, 'logo');
 
-            logo.setCollideWorldBounds(true);
-
             // timedEvent = this.time.addEvent({ delay: 500, callback: onEvent, callbackScope: this, loop: true });
         }
 
         function update() {
             var logo = this.physics.add.image(x * Math.random(), -100, 'logo');
-
-            logo.setCollideWorldBounds(true);
         }
 
         // function onEvent() {
