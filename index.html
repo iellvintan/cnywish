@@ -50,11 +50,15 @@
 
             var logo = this.physics.add.image(x * Math.random(), -100, 'logo');
 
+            logo.setCollideWorldBounds(true);
+
             // timedEvent = this.time.addEvent({ delay: 500, callback: onEvent, callbackScope: this, loop: true });
         }
 
         function update() {
             var logo = this.physics.add.image(x * Math.random(), -100, 'logo');
+
+            logo.setCollideWorldBounds(true);
         }
 
         // function onEvent() {
