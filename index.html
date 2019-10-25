@@ -15,9 +15,14 @@
             width: x,
             height: y,
             physics: {
-                default: 'arcade',
-                arcade: {
-                    gravity: { y: 1022 }
+                default: 'impact',
+                impact: {
+                    maxVelocity: 500,
+                    gravity: 100,
+                    debug: true,
+                    setBounds: {
+                        top: false
+                    }
                 }
             },
             scene: {
