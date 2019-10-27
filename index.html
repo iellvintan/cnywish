@@ -2,73 +2,77 @@
 <html>
 
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.20.1/dist/phaser.js"></script>
 </head>
 
 <body>
 
     <script>
-        const x = innerWidth;
-        const y = innerHeight;
-        var config = {
-            type: Phaser.AUTO,
-            width: x,
-            height: y,
-            physics: {
-                default: 'arcade',
-                arcade: {
-                    gravity: { y: 1022 }
-                }
-            },
-            scene: {
-                preload: preload,
-                create: create,
-                update: update
+    // Get window width & height
+    var x = window.innerWidth;
+    var y = window.innerHeight;
+    var config = {
+        type: Phaser.AUTO,
+        width: x,
+        height: y,
+        backgroundColor: '#aa381e',
+        parent: 'phaser-example',
+        physics: {
+            default: 'matter',
+            matter: {
+                enableSleeping: true
             }
-        };
-
-        var objects = {};
-        var game = new Phaser.Game(config);
-
-        function preload() {
-            this.load.image('background', 'assets/images/cny-background.png');
-            this.load.image('logo', 'assets/images/coin.png');
-            this.load.image('red', 'http://labs.phaser.io/assets/particles/yellow.png');
+        },
+        scene: {
+            preload: preload,
+            create: create
         }
+    };
 
-        function create() {
-            objects.camera = this.cameras.add(0, 0, x, y);
-            objects.camera.setBackgroundColor('rgba(255, 255, 255, 1)');
+    var c = 0;
+    var h;
+    var timedEvent;
 
-            let image = this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'background');
-            let scaleX = this.cameras.main.width / image.width;
-            let scaleY = this.cameras.main.height / image.height;
-            let scale = Math.max(scaleX, scaleY);
-            image.setScale(scale).setScrollFactor(0);
+    var game = new Phaser.Game(config);
 
-            var particles = this.add.particles('red');
+    function preload() {
+        this.load.image('coin', 'assets/images/coin.png');
+        this.load.image('greet', 'assets/images/greet.png');
+    }
 
-            var logo = this.physics.add.image(x * Math.random(), -100, 'logo');
+    function create() {
+        this.matter.world.setBounds(0, 0, x, y, 128, true, true, false, true);
+        timedEvent = this.time.addEvent({ delay: 100, callback: onEvent, callbackScope: this, loop: true });
+    }
 
-            // timedEvent = this.time.addEvent({ delay: 500, callback: onEvent, callbackScope: this, loop: true });
+    function onEvent() {
+        var ball = this.matter.add.image(Phaser.Math.Between(0, x), Phaser.Math.Between(-600, 0), 'coin');
+        ball.setCircle();
+        ball.setFriction(0.005);
+        // ball.setBounce(1);
+
+        c++;
+
+        // 125 coins
+        if (c === 125) {
+            timedEvent.remove(false);
+            this.matter.world.setBounds(0, 0, x, y, 0, false, false, false, false);
+            this.time.addEvent({ delay: 2500, callback: onEvent2, callbackScope: this });
         }
+    }
 
-        function update() {
-            var logo = this.physics.add.image(x * Math.random(), -100, 'logo');
-        }
+    function onEvent2() {
+        img = this.matter.add.image(x / 2, -600, 'greet');
+        h = img.height;
+        this.time.addEvent({ delay: 1500, callback: onEvent3, callbackScope: this });
+    }
 
-        // function onEvent() {
-        //     var logo = this.physics.add.image(x * Math.random(), 0, 'logo');
-
-        //     c++;
-
-        //     if (c === 10) {
-        //         timedEvent.remove(false);
-        //     }
-        // }
-
+    function onEvent3() {
+        this.matter.world.setBounds(0, (y + h)/2, x, 0, 128, true, true, false, true);
+    }
     </script>
 
 </body>
 
 </html>
+
