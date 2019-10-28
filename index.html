@@ -64,9 +64,9 @@
     }
 
     function onEvent() {
-        var sball = this.matter.add.image(Phaser.Math.Between(0, x), Phaser.Math.Between(-600, 0), 'scoin');
-        var ball = this.matter.add.image(Phaser.Math.Between(0, x), Phaser.Math.Between(-600, 0), 'coin');
-        var bball = this.matter.add.image(Phaser.Math.Between(0, x), Phaser.Math.Between(-600, 0), 'bcoin');
+        var sball = this.matter.add.image(Phaser.Math.Between(0, x), -600, 'scoin');
+        var ball = this.matter.add.image(Phaser.Math.Between(0, x), -600, 'coin');
+        var bball = this.matter.add.image(Phaser.Math.Between(0, x), -600, 'bcoin');
         sball.setCircle();
         sball.setFriction(0.005);
         ball.setCircle();
