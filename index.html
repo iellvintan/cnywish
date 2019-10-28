@@ -53,6 +53,8 @@
 
     function preload() {
         this.load.image('coin', 'assets/images/coin.png');
+        this.load.image('bcoin', 'assets/images/bcoin.png');
+        this.load.image('scoin', ' assets/images/scoin.png');
         // this.load.image('greet', 'assets/images/greet.png');
     }
 
@@ -62,15 +64,21 @@
     }
 
     function onEvent() {
+        var sball = this.matter.add.image(Phaser.Math.Between(0, x), Phaser.Math.Between(-600, 0), 'scoin');
         var ball = this.matter.add.image(Phaser.Math.Between(0, x), Phaser.Math.Between(-600, 0), 'coin');
+        var bball = this.matter.add.image(Phaser.Math.Between(0, x), Phaser.Math.Between(-600, 0), 'bcoin');
+        sball.setCircle();
+        sball.setFriction(0.005);
         ball.setCircle();
         ball.setFriction(0.005);
+        bball.setCircle();
+        bball.setFriction(0.005);
         // ball.setBounce(1);
 
         c++;
 
         // 125 coins
-        if (c === 125) {
+        if (c === 50) {
             timedEvent.remove(false);
             // this.matter.world.setBounds(0, 0, x, y, 0, false, false, false, false);
             this.time.addEvent({ delay: 1000, callback: fadeIn, callbackScope: this });
