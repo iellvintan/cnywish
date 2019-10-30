@@ -61,6 +61,7 @@
     function create() {
         this.matter.world.setBounds(0, 0, x, y, 128, true, true, false, true);
         timedEvent = this.time.addEvent({ delay: 100, callback: onEvent, callbackScope: this, loop: true });
+        this.time.addEvent({ delay: 8000, callback: fadeIn, callbackScope: this }); // greeting will show after 8 secs
     }
 
     function onEvent() {
@@ -77,11 +78,10 @@
 
         c++;
 
-        // 70 coins
-        if (c === 70) {
+        // 160 coins
+        if (c === 160) {
             timedEvent.remove(false);
             // this.matter.world.setBounds(0, 0, x, y, 0, false, false, false, false);
-            this.time.addEvent({ delay: 1000, callback: fadeIn, callbackScope: this });
         }
     }
 
