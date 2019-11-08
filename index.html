@@ -48,8 +48,9 @@
     var c = 0;
     // var h;
     var iter = 0;
-    var coins = []
+    var coins = [];
     var timedEvent;
+    const PI = 3.142;
 
     var game = new Phaser.Game(config);
 
@@ -98,7 +99,7 @@
         coins.forEach(flip);
         iter += 0.01;
 
-        if (iter >= 3.142) {
+        if (iter >= PI) {
             timedEvent2.remove(false);
         }
     }
