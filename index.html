@@ -47,6 +47,8 @@
 
     var c = 0;
     // var h;
+    var iter = 0;
+    var coins = []
     var timedEvent;
 
     var game = new Phaser.Game(config);
@@ -61,20 +63,27 @@
     function create() {
         this.matter.world.setBounds(0, 0, x, y, 128, true, true, false, true);
         timedEvent = this.time.addEvent({ delay: 100, callback: onEvent, callbackScope: this, loop: true });
+        timedEvent2 = this.time.addEvent({ delay: 0, callback: onEvent2, callbackScope: this, loop: true });
         this.time.addEvent({ delay: 8000, callback: fadeIn, callbackScope: this }); // greeting will show after 8 secs
     }
 
     function onEvent() {
         var sball = this.matter.add.image(Phaser.Math.Between(0, x), -600, 'scoin');
-        var ball = this.matter.add.image(Phaser.Math.Between(0, x), -600, 'coin');
-        var bball = this.matter.add.image(Phaser.Math.Between(0, x), -600, 'bcoin');
         sball.setCircle();
         sball.setFriction(0.005);
+
+        var ball = this.matter.add.image(Phaser.Math.Between(0, x), -600, 'coin');
         ball.setCircle();
         ball.setFriction(0.005);
+
+        var bball = this.matter.add.image(Phaser.Math.Between(0, x), -600, 'bcoin');
         bball.setCircle();
         bball.setFriction(0.005);
         // ball.setBounce(1);
+
+        coins.push(sball);
+        coins.push(ball);
+        coins.push(bball);
 
         c++;
 
@@ -82,6 +91,15 @@
         if (c === 160) {
             timedEvent.remove(false);
             // this.matter.world.setBounds(0, 0, x, y, 0, false, false, false, false);
+        }
+    }
+
+    function onEvent2() {
+        coins.forEach(flip);
+        iter += 0.01;
+
+        if (iter >= 3.142) {
+            timedEvent2.remove(false);
         }
     }
 
@@ -94,6 +112,10 @@
     // function onEvent3() {
     //     this.matter.world.setBounds(0, (y + h)/2, x, 0, 128, true, true, false, true);
     // }
+
+    function flip(value) {
+        value.scaleY = Math.cos(iter);
+    }
 
     function fadeIn() {
         //jQuery fadeIn
